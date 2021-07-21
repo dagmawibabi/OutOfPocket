@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:myexpensetracker/Model/expenseModel.dart';
 import 'package:myexpensetracker/Pages/addExpensePage.dart';
+import 'package:myexpensetracker/Pages/graphsPage.dart';
 import 'package:myexpensetracker/Pages/homePage.dart';
 import 'package:myexpensetracker/Pages/loadingPage.dart';
 
@@ -13,8 +14,14 @@ void main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(ExpenseModelAdapter());
+  Hive.registerAdapter(UserModelAdapter());
+  Hive.registerAdapter(BudgetModelAdapter());
+  Hive.registerAdapter(SettingsModelAdapter());
 
   await Hive.openBox<ExpenseModel>("Expenses");
+  await Hive.openBox<UserModel>("UserModel");
+  await Hive.openBox<BudgetModel>("BudgetModel");
+  await Hive.openBox<SettingsModel>("SettingsModel");
   runApp(Main());
 }
 
@@ -54,6 +61,7 @@ class _MainState extends State<Main> {
         "/": (context) => LoadingPage(),
         "homePage": (context) => HomePage(),
         "addExpensePage": (context) => AddExpensePage(),
+        "graphsPage": (context) => GraphsPage(),
       },
       themeMode: ThemeMode.light,
       darkTheme: ThemeData(

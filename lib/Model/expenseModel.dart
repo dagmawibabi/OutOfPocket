@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -21,4 +20,25 @@ class ExpenseModel extends HiveObject {
 
   @HiveField(4)
   late String date;
+}
+
+@HiveType(typeId: 1)
+class UserModel extends HiveObject {
+  @HiveField(0)
+  late String username;
+}
+
+@HiveType(typeId: 2)
+class BudgetModel extends HiveObject {
+  @HiveField(1)
+  late double budget;
+
+  @HiveField(2)
+  late double warningLimit;
+}
+
+@HiveType(typeId: 3)
+class SettingsModel extends HiveObject {
+  @HiveField(3)
+  late bool isDarkMode;
 }

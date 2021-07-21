@@ -5,7 +5,7 @@ import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:myexpensetracker/Model/boxes.dart';
 import 'package:myexpensetracker/Model/expenseModel.dart';
-import 'package:myexpensetracker/listOfIcons.dart';
+import 'package:myexpensetracker/UI%20Elements/listOfIcons.dart';
 
 class AddExpensePage extends StatefulWidget {
   const AddExpensePage({Key? key}) : super(key: key);

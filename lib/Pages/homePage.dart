@@ -7,8 +7,9 @@ import 'package:myexpensetracker/Model/boxes.dart';
 import 'package:myexpensetracker/Model/expenseModel.dart';
 import 'package:myexpensetracker/Pages/Modal%20Bottom%20Sheets/addBudgetSheet.dart';
 import 'package:myexpensetracker/Pages/Modal%20Bottom%20Sheets/editProfileSheet.dart';
+import 'package:myexpensetracker/Pages/Modal%20Bottom%20Sheets/settingsSheet.dart';
 import 'package:myexpensetracker/UI%20Elements/expensesCard.dart';
-import 'package:myexpensetracker/listOfIcons.dart';
+import 'package:myexpensetracker/UI%20Elements/listOfIcons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,7 +22,8 @@ class _HomePageState extends State<HomePage> {
   double initialBudget = 0.00;
   double totalExpenses = 0.00;
   double remainingBudget = 0.00;
-  double budgetLimit = 0;
+  double warningLimit = 0;
+  String username = "Buddy";
   List listOfExpenses = [];
   bool isSorted = false;
   bool isAscending = true;
@@ -29,6 +31,34 @@ class _HomePageState extends State<HomePage> {
   int hideChoice = 0;
   bool areExpensesHidden = false;
   bool isBudgetCardHidden = false;
+
+  // Get initial budget, budget limit ...
+  void getBudgetModel() {
+    print("---------------------------------------called");
+    initialBudget = 0;
+    warningLimit = 0;
+    var box = Boxes.getBudgetModel();
+    List instanceList = box.values.toList();
+    if (instanceList.length != 0) {
+      for (int i = 0; i < instanceList.length; i++) {
+        initialBudget = instanceList[i].budget;
+        warningLimit = instanceList[i].warningLimit;
+      }
+    }
+  }
+
+  // Get username
+  void getUserModel() {
+    username = "Buddy";
+    var box = Boxes.getUserModel();
+    List instanceList = box.values.toList();
+    if (instanceList.length != 0) {
+      for (int i = 0; i < instanceList.length; i++) {
+        username = instanceList[i].username;
+      }
+    }
+  }
+
   // Calculate Expenses
   void getExpenses() {
     var box = Boxes.getExpenses();
@@ -102,9 +132,20 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  // Initialze Hive
+  void initializeHive() async {
+    await Hive.openBox<ExpenseModel>("Expenses");
+    await Hive.openBox<UserModel>("UserModel");
+    await Hive.openBox<BudgetModel>("BudgetModel");
+    await Hive.openBox<SettingsModel>("SettingsModel");
+  }
+
   @override
   void initState() {
     super.initState();
+    initializeHive();
+    getUserModel();
+    getBudgetModel();
     getExpenses();
   }
 
@@ -116,6 +157,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    getUserModel();
+    getBudgetModel();
     getExpenses();
     return Scaffold(
       /*appBar: AppBar(
@@ -162,25 +205,34 @@ class _HomePageState extends State<HomePage> {
                               size: 30.0,
                             ),
                           ),
+                          SizedBox(width: 12.0),
                           // Add Budget Button
-                          Stack(
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                child: Text(
-                                  "💰  ",
+                          GestureDetector(
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                  child: Text(
+                                    "💰  ",
+                                    style: TextStyle(
+                                      fontSize: 17.0,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Positioned(
-                                left: 7.0,
-                                bottom: 23.0,
-                                child: Icon(
-                                  Icons.add,
-                                  color: Color(0xffac924c),
+                                Positioned(
+                                  left: 10.0,
+                                  bottom: 27.0,
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Color(0xffac924c),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            onTap: () {
+                              addBudgetModalBottomSheet(context);
+                            },
                           ),
                         ],
                       ),
@@ -189,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                       padding: EdgeInsets.only(left: 20.0),
                       child: Text(
-                        "Hello, 👋 \nDagmawi.",
+                        "Hello, 👋 \n" + username + ".",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 30.0,
@@ -217,7 +269,9 @@ class _HomePageState extends State<HomePage> {
 
                     // Settings Button
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        settingsModalBottomSheet(context);
+                      },
                       icon: Icon(Icons.settings),
                     ),
                   ],
@@ -227,98 +281,98 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: 10.0),
           // Burget Card
-          Container(
-            margin: EdgeInsets.all(10.0),
-            width: double.infinity,
-            height: 200.0,
-            decoration: BoxDecoration(
-              boxShadow:
-                  double.parse(remainingBudget.toStringAsFixed(2)) < budgetLimit
-                      ? [
-                          BoxShadow(
-                            color: Colors.deepOrangeAccent,
-                            spreadRadius: 2.0,
-                          ),
-                          BoxShadow(
-                            color: Colors.pinkAccent,
-                            spreadRadius: 2.0,
-                          ),
-                        ]
-                      : [
-                          BoxShadow(
-                            color: Color(0xff12fff7),
-                            spreadRadius: 2.0,
-                          ),
-                          BoxShadow(
-                            color: Color(0xffb3ffab),
-                            spreadRadius: 2.0,
-                          ),
-                        ],
-              gradient: LinearGradient(
-                colors: double.parse(remainingBudget.toStringAsFixed(2)) <
-                        budgetLimit
+          GestureDetector(
+            child: Container(
+              margin: EdgeInsets.all(10.0),
+              width: double.infinity,
+              height: 200.0,
+              decoration: BoxDecoration(
+                boxShadow: double.parse(remainingBudget.toStringAsFixed(2)) <
+                        warningLimit
                     ? [
-                        Colors.pinkAccent,
-                        Colors.deepOrangeAccent,
+                        BoxShadow(
+                          color: Colors.deepOrangeAccent,
+                          spreadRadius: 2.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.pinkAccent,
+                          spreadRadius: 2.0,
+                        ),
                       ]
                     : [
-                        Color(0xffb3ffab),
-                        Color(0xff12fff7),
-                      ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              color: Colors.grey[200],
-              /* border: Border.all(
-                color: Colors.black,
-              ),*/
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            padding: EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Total Remaining Budget
-                Column(
-                  children: [
-                    Text(
-                      "Total",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/images/birrSymbol_remainingBudget.png",
-                          width: 30.0,
-                          height: 30.0,
+                        BoxShadow(
+                          color: Color(0xff12fff7),
+                          spreadRadius: 2.0,
                         ),
-                        SizedBox(width: 2.0),
-                        Text(
-                          remainingBudget.toStringAsFixed(2),
-                          style: TextStyle(
-                            fontSize: 36.0,
-                            color: Colors.black,
-                            backgroundColor: isBudgetCardHidden
-                                ? Colors.black
-                                : Colors.transparent,
-                          ),
+                        BoxShadow(
+                          color: Color(0xffb3ffab),
+                          spreadRadius: 2.0,
                         ),
                       ],
-                    ),
-                  ],
+                gradient: LinearGradient(
+                  colors: double.parse(remainingBudget.toStringAsFixed(2)) <
+                          warningLimit
+                      ? [
+                          Colors.pinkAccent,
+                          Colors.deepOrangeAccent,
+                        ]
+                      : [
+                          Color(0xffb3ffab),
+                          Color(0xff12fff7),
+                        ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-                SizedBox(height: 30.0),
-                // Initial Budget and Total expenses
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Initial Budget
-                    GestureDetector(
-                      child: Padding(
+                color: Colors.grey[200],
+                /* border: Border.all(
+                  color: Colors.black,
+                ),*/
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Total Remaining Budget
+                  Column(
+                    children: [
+                      Text(
+                        "Total",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/images/birrSymbol_remainingBudget.png",
+                            width: 30.0,
+                            height: 30.0,
+                          ),
+                          SizedBox(width: 2.0),
+                          Text(
+                            remainingBudget.toStringAsFixed(2),
+                            style: TextStyle(
+                              fontSize: 36.0,
+                              color: Colors.black,
+                              backgroundColor: isBudgetCardHidden
+                                  ? Colors.black
+                                  : Colors.transparent,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30.0),
+                  // Initial Budget and Total expenses
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Initial Budget
+                      Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Column(
                           children: [
@@ -355,52 +409,52 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      onTap: () {
-                        addBudgetModalBottomSheet(context);
-                      },
-                    ),
-                    // Total Expenses
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/images/birrSymbol_initialBudget.png",
-                                width: 15.0,
-                                height: 15.0,
-                              ),
-                              SizedBox(width: 2.0),
-                              Text(
-                                totalExpenses.toStringAsFixed(2),
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: isBudgetCardHidden
-                                      ? Colors.black
-                                      : Colors.transparent,
+                      // Total Expenses
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/images/birrSymbol_initialBudget.png",
+                                  width: 15.0,
+                                  height: 15.0,
                                 ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            "Expenses",
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[800],
+                                SizedBox(width: 2.0),
+                                Text(
+                                  totalExpenses.toStringAsFixed(2),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: isBudgetCardHidden
+                                        ? Colors.black
+                                        : Colors.transparent,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            Text(
+                              "Expenses",
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
+            onTap: () {
+              Navigator.pushNamed(context, "graphsPage");
+            },
           ),
           SizedBox(height: 10.0),
           // Expenses Title and Currency

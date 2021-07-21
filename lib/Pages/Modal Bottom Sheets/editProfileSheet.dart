@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:myexpensetracker/Model/boxes.dart';
+import 'package:myexpensetracker/Model/expenseModel.dart';
 
 Future<dynamic> editProfileModalBottomSheet(BuildContext context) {
+  void saveUserModel(String username) async {
+    UserModel userModel = UserModel()..username = username;
+    var box = Boxes.getUserModel();
+    await box.clear();
+    await box.add(userModel);
+    Navigator.pushReplacementNamed(context, "homePage");
+  }
+
   TextEditingController usernameController = TextEditingController();
   return showModalBottomSheet(
     isScrollControlled: true,
@@ -67,31 +77,36 @@ Future<dynamic> editProfileModalBottomSheet(BuildContext context) {
               ),
             ),
             // Save Button
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 24.0),
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
-              decoration: BoxDecoration(
-                /*gradient: LinearGradient(
-                      colors: [
-                        Color(0xffb3ffab),
-                        Color(0xff12fff7),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),*/
-                color: Colors.grey[900],
-                borderRadius: BorderRadius.circular(50.0),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "Save",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
+            GestureDetector(
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 24.0),
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 24.0),
+                decoration: BoxDecoration(
+                  /*gradient: LinearGradient(
+                        colors: [
+                          Color(0xffb3ffab),
+                          Color(0xff12fff7),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),*/
+                  color: Colors.grey[900],
+                  borderRadius: BorderRadius.circular(50.0),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  "Save",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
+              onTap: () {
+                saveUserModel(usernameController.text);
+              },
             ),
           ],
         ),
