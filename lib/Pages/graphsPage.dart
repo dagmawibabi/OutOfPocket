@@ -13,7 +13,7 @@ class _GraphsPageState extends State<GraphsPage> {
     return Scaffold(
       body: Center(
         child: Text(
-          "GRAPH,",
+          "GRAPH",
         ),
       ),
     );

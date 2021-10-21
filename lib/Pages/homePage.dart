@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
 
   // Get initial budget, budget limit ...
   void getBudgetModel() {
-    print("---------------------------------------called");
     initialBudget = 0;
     warningLimit = 0;
     var box = Boxes.getBudgetModel();
