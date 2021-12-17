@@ -84,6 +84,7 @@ class _HomePageState extends State<HomePage> {
     int goal = unsorted.length;
     int curGoal = 0;
     int removeIndex = 0;
+    /*
     if (isSorted) {
       while (curGoal < goal) {
         for (int i = 0; i < unsorted.length; i++) {
@@ -119,7 +120,28 @@ class _HomePageState extends State<HomePage> {
         removeIndex = 0;
       }
     }
+    */
 
+    for (int i = 0; i < unsorted.length; i++) {
+      for (int j = i + 1; j < unsorted.length; j++) {
+        if (isAscending == true) {
+          if (unsorted[i].expense < unsorted[j].expense) {
+            expenseObj = unsorted[i];
+            unsorted[i] = unsorted[j];
+            unsorted[j] = expenseObj;
+          }
+        } else {
+          if (unsorted[i].expense > unsorted[j].expense) {
+            expenseObj = unsorted[i];
+            unsorted[i] = unsorted[j];
+            unsorted[j] = expenseObj;
+          }
+        }
+      }
+    }
+    for (int i = 0; i < unsorted.length; i++) {
+      sorted.add(unsorted[i]);
+    }
     //
     print("==================================================================");
     for (int i = 0; i < sorted.length; i++) {
@@ -452,7 +474,13 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             onTap: () {
-              Navigator.pushNamed(context, "graphsPage");
+              Navigator.pushNamed(
+                context,
+                "graphsPage",
+                arguments: {
+                  "data": listOfExpenses,
+                },
+              );
             },
           ),
           SizedBox(height: 10.0),

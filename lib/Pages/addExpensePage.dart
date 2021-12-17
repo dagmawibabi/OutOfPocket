@@ -56,7 +56,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
     "Dec",
   ];
   String pickADateTitle = "Pick a date";
-  late String chosenDate;
+  late String chosenDate = "Monday, December - 2019";
 
   TextEditingController titleController = TextEditingController();
   TextEditingController expenseController = TextEditingController();
@@ -85,13 +85,14 @@ class _AddExpensePageState extends State<AddExpensePage> {
     int currentDay = DateTime.now().day;
     int currentMonth = DateTime.now().month;
     int currentYear = DateTime.now().year;
-    chosenDate = days[currentWeekday - 1].toString() +
+    /*chosenDate = days[currentWeekday - 1].toString() +
         ", " +
         currentDay.toString() +
         " - " +
         months[currentMonth].toString() +
         " - " +
-        currentYear.toString();
+        currentYear.toString();*/
+    chosenDate = "Monday, December - 2019";
   }
 
   @override
@@ -383,7 +384,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
             titleController.text,
             double.parse(expenseController.text),
             noteController.text,
-            chosenDate,
+            "Friday the 13 th", //chosenDate,
           );
         },
       ),

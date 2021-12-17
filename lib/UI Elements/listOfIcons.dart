@@ -60,7 +60,7 @@ class ListOfIcons {
     Icons.directions_railway_filled_outlined,
     Icons.dns_outlined,
     Icons.dns_outlined,
-    Icons.door_front_outlined,
+    //Icons.door_front_outlined,
     Icons.door_sliding_outlined,
     Icons.downhill_skiing_outlined,
     Icons.electric_bike_outlined,

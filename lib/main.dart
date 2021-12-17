@@ -78,7 +78,6 @@ class _MainState extends State<Main> {
         ),
         fontFamily: "Abel",
         primaryColor: Color(0xff1a1a1a),
-        buttonColor: Color(0xff1a1a1a),
         scaffoldBackgroundColor: Colors.grey[900],
         textTheme: TextTheme(
           bodyText1: TextStyle(
@@ -118,7 +117,6 @@ class _MainState extends State<Main> {
         ),
         fontFamily: "Abel",
         primaryColor: Color(0xff1a1a1a),
-        buttonColor: Color(0xff1a1a1a),
         scaffoldBackgroundColor: Color(0xffeeeeee),
         textTheme: TextTheme(
           bodyText1: TextStyle(
