@@ -27,7 +27,7 @@ class _GraphsPageState extends State<GraphsPage> {
     expensesString.add("0");
     titles.add("");
     for (int i = 0; i < receivedData["data"].length; i++) {
-      titles.add(receivedData["data"][i].icon);
+      titles.add(receivedData["data"][i].title);
     }
   }
 
@@ -45,11 +45,6 @@ class _GraphsPageState extends State<GraphsPage> {
                     title: "Expenses",
                     color: Colors.pink,
                     data: expenses,
-                  ),
-                  Feature(
-                    title: "Budget",
-                    color: Colors.blue,
-                    data: [0.0, 100.0, 0.0],
                   ),
                 ],
                 size: Size(370, 400),
