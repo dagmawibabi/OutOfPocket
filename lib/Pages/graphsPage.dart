@@ -51,7 +51,7 @@ class _GraphsPageState extends State<GraphsPage> {
                 labelX: titles,
                 labelY: expensesString,
                 showDescription: true,
-                graphColor: Colors.black,
+                graphColor: Theme.of(context).secondaryHeaderColor,
                 graphOpacity: 0.2,
                 verticalFeatureDirection: false,
                 descriptionHeight: 130,

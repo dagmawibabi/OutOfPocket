@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:line_icons/line_icon.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:myexpensetracker/Model/boxes.dart';
 import 'package:myexpensetracker/Model/expenseModel.dart';
 import 'package:myexpensetracker/UI%20Elements/listOfIcons.dart';
@@ -98,7 +94,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: SingleChildScrollView(
+      child: Column(
         children: [
           // Back Button
           Column(
@@ -148,7 +145,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(50.0),
                   ),
                   child: ExpansionTile(
@@ -156,12 +153,12 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       chosenIcon == -1
                           ? Icons.adjust_rounded
                           : ListOfIcons.listOfIcons[chosenIcon],
-                      color: Colors.black,
+                      color: Theme.of(context).secondaryHeaderColor,
                     ),
                     title: Text(
                       "Choose an Icon",
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Theme.of(context).secondaryHeaderColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -169,7 +166,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       iconsExpanded
                           ? Icons.keyboard_arrow_up_sharp
                           : Icons.keyboard_arrow_down_sharp,
-                      color: Colors.black,
+                      color: Theme.of(context).secondaryHeaderColor,
                     ),
                     onExpansionChanged: (expansionState) {
                       iconsExpanded = expansionState;
@@ -188,7 +185,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                             vertical: 10.0, horizontal: 0.0),
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:Theme.of(context).primaryColor,
                           //border: Border.all(color: Colors.black),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -209,7 +206,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                                   ListOfIcons.listOfIcons[index],
                                   color: index == chosenIcon
                                       ? Colors.deepOrangeAccent
-                                      : Colors.black,
+                                      : Theme.of(context).secondaryHeaderColor,
                                 ),
                                 onPressed: () {
                                   chosenIcon = index;
@@ -229,7 +226,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   padding:
                       EdgeInsets.symmetric(vertical: 4.0, horizontal: 24.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColorDark,
                     borderRadius: BorderRadius.circular(50.0),
                   ),
                   child: Row(
@@ -260,7 +257,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   padding:
                       EdgeInsets.symmetric(vertical: 4.0, horizontal: 24.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColorDark,
                     borderRadius: BorderRadius.circular(50.0),
                   ),
                   child: Row(
@@ -292,7 +289,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   padding:
                       EdgeInsets.symmetric(vertical: 4.0, horizontal: 24.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color:Theme.of(context).primaryColorDark,
                     borderRadius: BorderRadius.circular(50.0),
                   ),
                   child: Row(
@@ -321,10 +318,12 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 // Pick a date
                 GestureDetector(
                   child: Container(
+
                     width: double.infinity,
                     padding:
                         EdgeInsets.symmetric(vertical: 14.0, horizontal: 24.0),
                     decoration: BoxDecoration(
+
                       /*gradient: LinearGradient(
                         colors: [
                           Color(0xffb3ffab),
@@ -333,14 +332,14 @@ class _AddExpensePageState extends State<AddExpensePage> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),*/
-                      color: Colors.grey[900],
+                      color: Colors.black,
                       borderRadius: BorderRadius.circular(50.0),
                     ),
                     alignment: Alignment.center,
                     child: Text(
                       pickADateTitle,
                       style: TextStyle(
-                        color: Colors.white,
+                        color:Colors.white,
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -370,6 +369,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
           ),
         ],
       ),
+      ),
       floatingActionButton: FloatingActionButton(
         //backgroundColor: Color(0xee12fff7),
         child: Icon(
@@ -390,4 +390,5 @@ class _AddExpensePageState extends State<AddExpensePage> {
       ),
     );
   }
+
 }

@@ -40,5 +40,5 @@ class BudgetModel extends HiveObject {
 @HiveType(typeId: 3)
 class SettingsModel extends HiveObject {
   @HiveField(3)
-  late bool isDarkMode;
+ late bool isDarkMode = false;
 }

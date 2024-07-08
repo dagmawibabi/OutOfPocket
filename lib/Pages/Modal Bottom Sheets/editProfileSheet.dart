@@ -3,6 +3,8 @@ import 'package:myexpensetracker/Model/boxes.dart';
 import 'package:myexpensetracker/Model/expenseModel.dart';
 
 Future<dynamic> editProfileModalBottomSheet(BuildContext context) {
+
+final theme = Theme.of(context);
   void saveUserModel(String username) async {
     UserModel userModel = UserModel()..username = username;
     var box = Boxes.getUserModel();
@@ -18,7 +20,7 @@ Future<dynamic> editProfileModalBottomSheet(BuildContext context) {
     builder: (context) {
       return Container(
         height: 650.0,
-        color: Colors.grey[200],
+        color: theme.primaryColor,
         child: Column(
           children: [
             // Back Button
@@ -42,7 +44,7 @@ Future<dynamic> editProfileModalBottomSheet(BuildContext context) {
             SizedBox(height: 10.0),
             Text(
               "What's your name?",
-              style: TextStyle(fontSize: 26.0),
+              style: TextStyle(fontSize: 26.0, ),
             ),
             SizedBox(height: 20.0),
             // Input Box
@@ -50,7 +52,7 @@ Future<dynamic> editProfileModalBottomSheet(BuildContext context) {
               margin: EdgeInsets.symmetric(horizontal: 24.0),
               padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 24.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).primaryColorDark,
                 borderRadius: BorderRadius.circular(50.0),
               ),
               child: Row(

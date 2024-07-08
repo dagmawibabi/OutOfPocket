@@ -50,13 +50,13 @@ class _ExpensesCardState extends State<ExpensesCard> {
       padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 10.0),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:Theme.of(context).primaryColor,
         //border: Border.all(color: Colors.black),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: ExpansionTile(
         tilePadding: EdgeInsets.all(0.0),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).primaryColor,
         expandedCrossAxisAlignment: CrossAxisAlignment.end,
         // Icon
         leading: Container(
@@ -77,7 +77,7 @@ class _ExpensesCardState extends State<ExpensesCard> {
         title: Text(
           widget.title,
           style: TextStyle(
-            color: Colors.black,
+            color: Theme.of(context).secondaryHeaderColor,
             fontWeight: FontWeight.bold,
             letterSpacing: 0.8,
             backgroundColor:
@@ -93,7 +93,7 @@ class _ExpensesCardState extends State<ExpensesCard> {
           child: Text(
             widget.expense.toStringAsFixed(2),
             style: TextStyle(
-              color: Colors.black,
+              color:Theme.of(context).secondaryHeaderColor,
               fontWeight: FontWeight.bold,
               backgroundColor:
                   widget.areExpensesHidden ? Colors.black : Colors.transparent,
@@ -118,7 +118,7 @@ class _ExpensesCardState extends State<ExpensesCard> {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                       ),
                       margin: EdgeInsets.only(top: 2.0, right: 2.0),
                       padding:
@@ -129,7 +129,7 @@ class _ExpensesCardState extends State<ExpensesCard> {
                             "📝 ",
                             style: TextStyle(
                               fontSize: 16.0,
-                              color: Colors.black,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                           Expanded(
@@ -137,7 +137,7 @@ class _ExpensesCardState extends State<ExpensesCard> {
                               widget.note,
                               style: TextStyle(
                                 fontSize: 16.0,
-                                color: Colors.black,
+                                color: Theme.of(context).secondaryHeaderColor,
                                 backgroundColor: widget.areExpensesHidden
                                     ? Colors.black
                                     : Colors.transparent,
@@ -157,7 +157,7 @@ class _ExpensesCardState extends State<ExpensesCard> {
                             "⏳  ",
                             style: TextStyle(
                               fontSize: 11.0,
-                              color: Colors.black,
+                              color: Theme.of(context).secondaryHeaderColor,
                             ),
                           ),
                           Expanded(
@@ -165,7 +165,7 @@ class _ExpensesCardState extends State<ExpensesCard> {
                               widget.date,
                               style: TextStyle(
                                 fontSize: 11.0,
-                                color: Colors.black,
+                                color: Theme.of(context).secondaryHeaderColor,
                                 backgroundColor: widget.areExpensesHidden
                                     ? Colors.black
                                     : Colors.transparent,

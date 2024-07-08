@@ -1,6 +1,4 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:myexpensetracker/Model/boxes.dart';
@@ -582,7 +580,7 @@ class _HomePageState extends State<HomePage> {
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),*/
-                              color: Colors.grey[900],
+                              color: Colors.black,
                               borderRadius: BorderRadius.circular(16.0),
                             ),
                             child: Text(

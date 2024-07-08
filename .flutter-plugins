@@ -1,5 +1,6 @@
 # This is a generated file; do not edit or check into version control.
-path_provider=D:\\Mobile Dev Environment\\Flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-2.0.2\\
-path_provider_linux=D:\\Mobile Dev Environment\\Flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_linux-2.0.0\\
-path_provider_macos=D:\\Mobile Dev Environment\\Flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_macos-2.0.0\\
-path_provider_windows=D:\\Mobile Dev Environment\\Flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_windows-2.0.1\\
+path_provider=C:\\Users\\AnexDev\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider-2.1.3\\
+path_provider_android=C:\\Users\\AnexDev\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_android-2.2.6\\
+path_provider_foundation=C:\\Users\\AnexDev\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_foundation-2.4.0\\
+path_provider_linux=C:\\Users\\AnexDev\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_linux-2.2.1\\
+path_provider_windows=C:\\Users\\AnexDev\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\path_provider_windows-2.2.1\\
